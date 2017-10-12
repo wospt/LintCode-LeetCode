@@ -1,0 +1,64 @@
+// 小岛.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+#include<vector>
+#include<iostream>
+using namespace std;
+
+void change(vector<vector<bool>> &grid, int i, int j)
+{
+	grid[i][j] = false;
+	if (i < grid.size() - 1 && grid[i + 1][j])
+		change(grid, i + 1, j);
+	if (j < grid[i].size() - 1 && grid[i][j + 1])
+		change(grid, i, j + 1);
+	if (j > 0 && grid[i][j - 1])
+		change(grid, i, j - 1);
+	if (i > 0 && grid[i - 1][j])
+		change(grid, i - 1, j);
+	
+}
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int a[5][5] = { 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+	/***数据的导入***/
+	vector<vector<bool>> grid;
+	vector<bool> grid_1;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{ 
+			grid_1.push_back(a[i][j]);	
+		}
+		grid.push_back(grid_1);
+		grid_1.clear();
+	}
+
+
+
+	int count = 0;
+
+	/***遍历处理***/
+	for (int i = 0; i < grid.size(); i++)
+	{
+		for (int j = 0; j <grid[i].size(); j++)
+		{
+			if (grid[i][j])
+			{
+				count++; 
+				change(grid,i,j);
+			}
+		}
+	}
+
+
+	cout << count<< endl;
+	getchar();
+	return 0;
+}
+
+
